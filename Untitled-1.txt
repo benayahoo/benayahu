@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .rect{
+            height: 500px;
+            width: 500px;
+            border: 1px solid black;
+            left:100px;
+            position: relative;
+        }
+        #circle{
+            /* background-color: brown; */
+            width: 40px;
+            height: 40px;
+            /* border-radius: 20px; */
+            position: absolute;
+            left: 100px;
+            top: 100px;
+        }
+        .c1{
+            background-color: cadetblue;
+            border-radius: 5px;
+            transform: rotate(0deg);
+        }
+        .c2{
+            background-color: red;
+            border-radius: 15px;
+            transform: rotate(0deg);
+        }
+        .c3{
+            background-color: green;
+            border-radius: 0px;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+    <button onclick="moveLeft()"> << </button>
+    <button onclick="moveRight()"> >> </button>
+    <div class="rect">
+        <div id="circle"></div>
+    </div>
+    <script>
+        var clss=["c1","c2","c3"];
+        var clsIndex=0;
+        changeCls();
+        function changeCls(){
+            console.log("changeCls");
+            
+            document.getElementById("circle").className=clss[clsIndex];
+            clsIndex=(clsIndex+1)%clss.length;
+        }
+        var colors=["lightgreen","red","lightblue","pink","yellow"];
+        var clrIndex=0;
+        setInterval(changeCls,1000);
+        function moveLeft(){
+            document.getElementById("circle").style.backgroundColor=colors[clrIndex];
+            clrIndex=(clrIndex+1) % colors.length;
+            
+        }
+        var xpos=0;
+        var intervalID;
+        var framerate=100;
+        intervalID=setTimeout(oneStep,framerate);
+        var step=5;
+        function oneStep(){
+            framerate=Math.max(10,framerate-9);
+            xpos+=step;
+            if(xpos > 360){
+                step=-5;
+                framerate=100;
+            }
+            if(xpos<=0){
+                step=5;
+                framerate=100;
+            }
+            document.getElementById("circle").style.left=xpos+"px";
+            setTimeout(oneStep,framerate);
+        }
+    </script>
+</body>
+</html>
